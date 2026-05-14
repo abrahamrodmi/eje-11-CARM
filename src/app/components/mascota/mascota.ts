@@ -15,7 +15,7 @@ export class Mascota implements OnInit {
 
   //requerimos el listado de mascotas para mostrarlo en el html, y las funciones para crear,
   mascotas: MascotaModel[] = [];
-  //como inyectar el servicio de mascota para usarlo en este componente?
+
 
   mascota: MascotaModel = {
     id: 0,
@@ -43,11 +43,10 @@ export class Mascota implements OnInit {
 
   actualizarMascota(id: number): void {
 
-    console.log(`Actualizar mascota con ID: ${id}`);
   }
 
   eliminarMascota(id: number): void {
-
-    console.log(`Eliminar mascota con ID: ${id}`);
+    this.mascotaService.delete(id);
+    console.log(`Eliminar mascota con ID: ${id}`);   
   }
 }
