@@ -33,20 +33,40 @@ export class Mascota implements OnInit {
 
   listarMascotas(): void {
     this.mascotas = this.mascotaService.findAll();
-    console.log('Listar mascotas');
   }
 
-  guardarMascota(): void {
-    this.mascotaService.save(this.mascota);
-    console.log('Guardar mascota');
+  guardarMascota():void { 
+    //Objeto nuevo
+    //Directamente pasarle el parametro
+    //Operador ...
+    if (this.enEdicion) {
+      // actualizar la mascota existente
+      this.mascotaService.update(this.mascota);
+      this.enEdicion = false;
+      this.limpiar();
+      this.listarMascotas();
+    } else {
+      this.mascotaService.save(this.mascota);
+      this.limpiar();
+      this.listarMascotas();
+    }
   }
 
-  actualizarMascota(id: number): void {
-
+  actualizarMascota(mascotaActualizar: MascotaModel) {
+    //mostrar datos en el formulario
+    this.mascota={...mascotaActualizar}
+    this.enEdicion=true
   }
 
-  eliminarMascota(id: number): void {
+  limpiar(){
+    this.mascota={  
+      id:0,
+      nombre:'',
+      edad: 0}    
+  }
+
+  eliminarMascota(id: number){
     this.mascotaService.delete(id);
-    console.log(`Eliminar mascota con ID: ${id}`);   
+    this.listarMascotas();
   }
 }

@@ -23,7 +23,6 @@ export class MascotaService {
   save(mascota:MascotaModel): void {
     mascota.id = this.idContador++; 
     this.mascotas.push(mascota);
-    console.log('Mascota creada:', mascota);
   }
 
   findbyId(id: number): MascotaModel | undefined {
@@ -33,23 +32,19 @@ export class MascotaService {
     return this.mascotas;
   }
 
-  update(id: number, updatedMascota: MascotaModel): void {
-    const index = this.mascotas.findIndex(m => m.id === id);
-    if (index !== -1) {
-      this.mascotas[index] = updatedMascota;
-      console.log('Mascota actualizada:', updatedMascota);
-    } else {
-      console.log(`Mascota con ID ${id} no encontrada.`);
+
+  update(updatedMascota: MascotaModel) {
+    const index = this.mascotas.findIndex((mascota) => mascota.id === updatedMascota.id);
+    if (index === -1) {
+      return;
     }
+    this.mascotas[index] = { ...this.mascotas[index], ...updatedMascota };
   }
 
-  delete(id: number): void {
-    const index = this.mascotas.findIndex(m => m.id === id);
-    if (index !== -1) {
-      const deletedMascota = this.mascotas.splice(index, 1)[0];
-      console.log('Mascota eliminada:', deletedMascota);
-    } else {
-      console.log(`Mascota con ID ${id} no encontrada.`);
+  delete(id:number) {
+    // eliminar por id y actualizar el arreglo de mascotas
+    this.mascotas = this.mascotas.filter((mascota) => mascota.id !== id);
     }
+    
   }
-}
+
